@@ -1,0 +1,39 @@
+<div class="container">
+  <h1 class="page-header">Reminder</h1>
+
+  <div class="card">
+    <div class="card-body">
+      <h3 class="card-title font-weight-bold"><%= reminderItem.title %></h3>
+      <h4 class="card-subtitle mb-2 text-muted"><%= reminderItem.description %></h4>
+      <h5 class="card-text">
+        Completed:
+        <% if (reminderItem.completed == true) { %>
+          <span class="badge badge-success">True</span>
+        <% } else if (reminderItem.completed == false) { %>
+          <span class="badge badge-danger">False</span>
+        <% } %>
+      </h5>
+      
+      <h5 class="card-text">Subtasks:</h5>
+      <ul>
+        <% reminderItem.subtasks.forEach(function(subtask) { %>
+          <li><%= subtask %></li>
+        <% }) %>
+      </ul>
+
+      <h5 class="card-text">Tags:</h5>
+      <ul>
+        <% reminderItem.tags.forEach(function(tag) { %>
+          <li><%= tag %></li>
+        <% }) %>
+      </ul>
+
+      <h5 class="card-text">Date: <%= reminderItem.reminderDate %></h5>
+
+      <a class="btn btn-warning" href=<%= "/reminder/" + reminderItem.id + "/edit" %>>Edit</a>
+      <form class="deleteForm d-inline" method="POST" action=<%= "/reminder/delete/" + reminderItem.id %>>
+        <button type="submit" class="btn btn-danger">Delete</button>
+      </form>
+    </div>
+  </div>
+</div>
