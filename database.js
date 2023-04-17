@@ -32,7 +32,7 @@ const database = [
       password: "johnny123!",
       reminders: [
         {
-          id: 1, 
+          id: 2, 
           title: "I'm Johnny, Jimmy's friend",
           description: "Hello Jimmy",
           completed: true,

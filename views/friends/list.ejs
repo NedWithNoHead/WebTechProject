@@ -1,18 +1,27 @@
-<h1>Friends</h1>
-<table class="table">
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Email</th>
-        </tr>
-    </thead>
-    <tbody>
-        <% friends.forEach((friend) => { %>
-        <tr>
-            <td><%= friend.name %></td>
-            <td><%= friend.email %></td>
-        </tr>
-        <% }) %>
-    </tbody>
-</table>
-<a href="/friends/search" class="btn btn-primary">Add Friends</a>
+<div class="container">
+    <div class="row">
+      <div class="col-md-8 mx-auto">
+        <h1 class="text-center mb-4">Friends</h1>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% friends.forEach((friend) => { %>
+            <tr>
+              <td><%= friend.name %></td>
+              <td><%= friend.email %></td>
+            </tr>
+            <% }) %>
+          </tbody>
+        </table>
+        <div class="text-center">
+          <a href="/friends/search" class="btn btn-primary">Add Friends</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  

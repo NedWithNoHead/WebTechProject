@@ -16,10 +16,11 @@ let remindersController = {
     const userFromDb = database.findOne(user.email);
     let reminderToFind = req.params.id;
     let searchResult = userFromDb.reminders.find((reminder) => reminder.id == reminderToFind);
+
     if (searchResult) {
       res.render("reminder/single-reminder", { reminderItem: searchResult });
     } else {
-      res.status(404).send("Reminder not found");
+      res.status(404).send("Reminder not found or not authorized to view this reminder");
     }
   },
   create: (req, res) => {
@@ -42,13 +43,25 @@ let remindersController = {
     const userFromDb = database.findOne(user.email);
     let reminderToFind = req.params.id;
     let searchResult = userFromDb.reminders.find((reminder) => reminder.id == reminderToFind);
-    res.render("reminder/edit", { reminderItem: searchResult });
+
+    if (searchResult) {
+      res.render("reminder/edit", { reminderItem: searchResult });
+    } else {
+      res.status(404).send("Reminder not found or not authorized to edit this reminder");
+    }
   },
   update: (req, res) => {
     const user = req.user;
+  
+    if (!user) {
+      res.redirect("/login");
+      return;
+    }
+  
     const userFromDb = database.findOne(user.email);
     let reminderToFind = req.params.id;
     let reminderIndex = userFromDb.reminders.findIndex((reminder) => reminder.id == reminderToFind);
+  
     if (reminderIndex != -1) {
       let status = req.body.completed === "true";
       let updatedReminder = {
@@ -63,18 +76,21 @@ let remindersController = {
       userFromDb.reminders[reminderIndex] = updatedReminder;
       res.redirect("/reminder");
     } else {
-      res.status(404).send("Reminder not found");
+      res.status(404).send("Reminder not found or not authorized to update this reminder");
     }
   },
+  
+
   delete: (req, res) => {
     const user = req.user;
     const userFromDb = database.findOne(user.email);
     let reminderIndex = userFromDb.reminders.findIndex((reminder) => reminder.id == req.params.id);
+
     if (reminderIndex != -1) {
       userFromDb.reminders.splice(reminderIndex, 1);
       res.redirect("/reminder");
     } else {
-      res.status(404).send("Reminder not found");
+      res.status(404).send("Reminder not found or not authorized to delete this reminder");
     }
   },
 };
